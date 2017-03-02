@@ -1,0 +1,17 @@
+{
+  "name": "cantina-asser",
+  "description": "Gerenciador de contas da cantina",
+  "main": "server.js",
+  "authors": [
+    "Everton Monte da Silva"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
