@@ -4,7 +4,7 @@
   "description": "Gerenciador de contas da cantina",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\"",
+    "test": "echo \"Sem teste especificado\"",
     "start": "node server"
   },
   "author": "Everton Monte da Silva",
