@@ -1,21 +1,21 @@
 angular.module('cantina-asser').controller('ProdutosController', function ($scope, Produto, Categoria, $routeParams) {
 
     if ($routeParams.produtoId) {
-            Produto.get({ id: $routeParams.produtoId },
-                function (resultado) {
-                    console.log(resultado);
-                    $scope.produto = resultado;
-                },
-                function (erro) {
-                    $scope.mensagem = {
-                        texto: 'Não foi possível obter o produto.'
-                    };
-                    console.log(erro);
-                }
-            );
-        } else {
-            $scope.produto = new Produto();
-        }
+        Produto.get({ id: $routeParams.produtoId },
+            function (resultado) {
+                console.log(resultado);
+                $scope.produto = resultado;
+            },
+            function (erro) {
+                $scope.mensagem = {
+                    texto: 'Não foi possível obter o produto.'
+                };
+                console.log(erro);
+            }
+        );
+    } else {
+        $scope.produto = new Produto();
+    }
 
     function buscaCategorias() {
         Categoria.query(
@@ -68,5 +68,16 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
                 };
             });
     };
+
+    $scope.editarProduto = function (idProduto) {
+        
+        $scope.produtos.map(function (produtoEscolhido) {
+            if (produtoEscolhido._id == idProduto) {
+                $scope.produto = produtoEscolhido;
+            } else {
+                $scope.produto = new Produto();
+            }
+        });
+    }
 
 });

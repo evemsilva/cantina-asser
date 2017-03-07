@@ -34,9 +34,9 @@
                                 </div>
                                 <div class="btn-group">
                                     <!-- Editar Produto -->
-                                    <a ng-href="#/produtos/{{produto._id}}" class="btn btn-warning" data-toggle="modal" data-target="#myModal">
+                                    <button class="btn btn-warning" ng-click="editarProduto(produto._id)" data-toggle="modal" data-target="#myModal">
                                         <span class="glyphicon glyphicon-edit"></span>
-                                    </a>
+                                    </button>
                                 </div>
                                 <div class="btn-group">
                                     <!-- Excluir Produto -->
