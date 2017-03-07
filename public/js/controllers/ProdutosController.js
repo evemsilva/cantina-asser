@@ -1,16 +1,29 @@
 angular.module('cantina-asser').controller('ProdutosController', function ($scope, Produto, Categoria, $routeParams) {
 
-    $scope.produto = new Produto();
+    if ($routeParams.produtoId) {
+            Produto.get({ id: $routeParams.produtoId },
+                function (resultado) {
+                    console.log(resultado);
+                    $scope.produto = resultado;
+                },
+                function (erro) {
+                    $scope.mensagem = {
+                        texto: 'Não foi possível obter o produto.'
+                    };
+                    console.log(erro);
+                }
+            );
+        } else {
+            $scope.produto = new Produto();
+        }
 
     function buscaCategorias() {
         Categoria.query(
             function (resultado) {
                 $scope.categorias = resultado;
-                console.log(resultado);
                 $scope.mensagem = {};
             },
             function (erro) {
-                console.log(erro);
                 $scope.mensagem = {
                     texto: 'Não foi possível obter a lista'
                 };
@@ -23,10 +36,8 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
             function (resultado) {
                 $scope.produtos = resultado;
                 $scope.mensagem = {};
-                console.log(resultado);
             },
             function (erro) {
-                console.log(erro);
                 $scope.mensagem = {
                     texto: 'Não foi possível obter a lista'
                 };

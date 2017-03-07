@@ -18,7 +18,7 @@ var produtos = [{
     }
 ];
 
-var ID_CONTATO_INC = 3;
+var ID_produto_INC = 2;
 
 
 module.exports = function () {
@@ -29,11 +29,9 @@ module.exports = function () {
     };
 
     controller.obtemProduto = function (req, res) {
-        console.log(req.params.id);
-
         var idProduto = req.params.id;
         var produto = produtos.filter(function (produto) {
-            return produto.codigo == idProduto;
+            return produto._id == idProduto;
         })[0];
         produto ? res.json(produto) : res.status(404).send('produto não encontrado');
     };
@@ -41,13 +39,11 @@ module.exports = function () {
     controller.salvaProduto = function (req, res) {
         var produto = req.body;
 
-        console.log(req.body);
-        console.log(produto._id);
-
         produto = produto._id ?
             atualiza(produto) :
             adiciona(produto);
 
+        console.log(produto);
         res.json(produto);
         
     }
@@ -56,7 +52,7 @@ module.exports = function () {
 }
 
 function adiciona(produtoNovo) {
-    produtoNovo._id = ++ID_CONTATO_INC;
+    produtoNovo._id = ++ID_produto_INC;
     produtos.push(produtoNovo);
     return produtoNovo;
 }
