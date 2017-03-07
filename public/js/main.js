@@ -1,7 +1,7 @@
-angular.module('cantina-asser',['ngRoute','smart-table'])
+angular.module('cantina-asser',['ngRoute','ngResource','smart-table'])
   .config(function($routeProvider, $httpProvider) {
 
-    $routeProvider.when('/', {
+    $routeProvider.when('/produtos', {
       templateUrl: 'partials/home.html',
       controller: 'ProdutosController'
     });
@@ -18,5 +18,5 @@ angular.module('cantina-asser',['ngRoute','smart-table'])
       templateUrl: 'partials/contato.html'
     });
 
-    // $routeProvider.otherwise({redirectTo: '/contatos'});
+    $routeProvider.otherwise({redirectTo: '/produtos'});
 });

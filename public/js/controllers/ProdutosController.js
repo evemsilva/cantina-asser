@@ -1,113 +1,61 @@
-angular.module('cantina-asser').controller('ProdutosController', function ($scope) {
+angular.module('cantina-asser').controller('ProdutosController', function ($scope, Produto, Categoria, $routeParams) {
 
-    $scope.produtos = [{
-            'codigo': 1,
-            'nome': 'Chocolate Bis',
-            'categoria': {
-                'identificador': 1,
-                'descricao': 'Bomboniere'
+    $scope.produto = new Produto();
+
+    function buscaCategorias() {
+        Categoria.query(
+            function (resultado) {
+                $scope.categorias = resultado;
+                console.log(resultado);
+                $scope.mensagem = {};
             },
-            'preco': 3.59
-        },
-        {
-            'codigo': 2,
-            'nome': 'Coca-Cola 2L',
-            'categoria': {
-                'identificador': 2,
-                'descricao': 'Bebidas'
+            function (erro) {
+                console.log(erro);
+                $scope.mensagem = {
+                    texto: 'Não foi possível obter a lista'
+                };
+            }
+        );
+    }
+
+    function buscaProdutos() {
+        Produto.query(
+            function (resultado) {
+                $scope.produtos = resultado;
+                $scope.mensagem = {};
+                console.log(resultado);
             },
-            'preco': 6.49
-        },
-        {
-            'codigo': 1,
-            'nome': 'Chocolate Bis',
-            'categoria': {
-                'identificador': 1,
-                'descricao': 'Bomboniere'
-            },
-            'preco': 3.59
-        },
-        {
-            'codigo': 2,
-            'nome': 'Coca-Cola 2L',
-            'categoria': {
-                'identificador': 2,
-                'descricao': 'Bebidas'
-            },
-            'preco': 6.49
-        },
-        {
-            'codigo': 1,
-            'nome': 'Chocolate Bis',
-            'categoria': {
-                'identificador': 1,
-                'descricao': 'Bomboniere'
-            },
-            'preco': 3.59
-        },
-        {
-            'codigo': 2,
-            'nome': 'Coca-Cola 2L',
-            'categoria': {
-                'identificador': 2,
-                'descricao': 'Bebidas'
-            },
-            'preco': 6.49
-        },
-        {
-            'codigo': 1,
-            'nome': 'Chocolate Bis',
-            'categoria': {
-                'identificador': 1,
-                'descricao': 'Bomboniere'
-            },
-            'preco': 3.59
-        },
-        {
-            'codigo': 2,
-            'nome': 'Coca-Cola 2L',
-            'categoria': {
-                'identificador': 2,
-                'descricao': 'Bebidas'
-            },
-            'preco': 6.49
-        },
-        {
-            'codigo': 1,
-            'nome': 'Chocolate Bis',
-            'categoria': {
-                'identificador': 1,
-                'descricao': 'Bomboniere'
-            },
-            'preco': 3.59
-        },
-        {
-            'codigo': 2,
-            'nome': 'Coca-Cola 2L',
-            'categoria': {
-                'identificador': 2,
-                'descricao': 'Bebidas'
-            },
-            'preco': 6.49
-        },
-        {
-            'codigo': 1,
-            'nome': 'Chocolate Bis',
-            'categoria': {
-                'identificador': 1,
-                'descricao': 'Bomboniere'
-            },
-            'preco': 3.59
-        },
-        {
-            'codigo': 2,
-            'nome': 'Coca-Cola 2L',
-            'categoria': {
-                'identificador': 2,
-                'descricao': 'Bebidas'
-            },
-            'preco': 6.49
-        }
-    ];
+            function (erro) {
+                console.log(erro);
+                $scope.mensagem = {
+                    texto: 'Não foi possível obter a lista'
+                };
+            }
+        );
+    }
+
+    buscaProdutos();
+    buscaCategorias();
+
+    $scope.salva = function () {
+
+        console.log($scope.produto);
+
+        $scope.produto.$save()
+            .then(function () {
+                $scope.mensagem = {
+                    texto: 'Salvo com sucesso'
+                };
+                // limpa o formulário
+                $scope.produto = new Produto();
+                console.log('Salvo com sucesso no front end');
+                buscaProdutos();
+            })
+            .catch(function (erro) {
+                $scope.mensagem = {
+                    texto: 'Não foi possível salvar'
+                };
+            });
+    };
 
 });

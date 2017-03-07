@@ -1,5 +1,9 @@
 module.exports = function (app) {
     var controller = app.controllers.produto;
-    app.get('/produtos', controller.listaProdutos);
-    app.get('/produtos/:id', controller.obtemProduto);
+    app.route('/produtos')
+    .get(controller.listaProdutos)
+    .post(controller.salvaProduto);
+
+    app.route('/produtos/:id')
+    .get(controller.obtemProduto);
 };
