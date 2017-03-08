@@ -1,6 +1,6 @@
 angular.module('cantina-asser').controller('ProdutosController', function ($scope, Produto, Categoria, $routeParams) {
 
-    if ($routeParams.produtoId) {
+    /*if ($routeParams.produtoId) {
         Produto.get({ id: $routeParams.produtoId },
             function (resultado) {
                 console.log(resultado);
@@ -15,7 +15,9 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
         );
     } else {
         $scope.produto = new Produto();
-    }
+    }*/
+
+    $scope.produto = new Produto();
 
     function buscaCategorias() {
         Categoria.query(
@@ -57,9 +59,7 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
                 $scope.mensagem = {
                     texto: 'Salvo com sucesso'
                 };
-                // limpa o formulário
                 $scope.produto = new Produto();
-                console.log('Salvo com sucesso no front end');
                 buscaProdutos();
             })
             .catch(function (erro) {
@@ -69,15 +69,34 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
             });
     };
 
-    $scope.editarProduto = function (idProduto) {
-        
-        $scope.produtos.map(function (produtoEscolhido) {
-            if (produtoEscolhido._id == idProduto) {
-                $scope.produto = produtoEscolhido;
-            } else {
-                $scope.produto = new Produto();
+    $scope.selecionarProduto = function (idProduto) {
+        Produto.get({ id: idProduto },
+            function (resultado) {
+                $scope.produto = resultado;
+            },
+            function (erro) {
+                $scope.mensagem = {
+                    texto: 'Não foi possível obter o produto.'
+                };
+                console.log(erro);
             }
-        });
+        );
     }
+
+    $scope.limparProduto = function () {
+        $scope.produto = new Produto();
+    }
+
+    $scope.removeProduto = function (produto) {
+        Produto.delete({ id: produto._id },
+            buscaProdutos,
+            function (erro) {
+                $scope.mensagem = {
+                    texto: 'Não foi possível remover o contato'
+                };
+                console.log(erro);
+            }
+        );
+    };
 
 });

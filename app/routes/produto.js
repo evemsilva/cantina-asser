@@ -5,5 +5,6 @@ module.exports = function (app) {
     .post(controller.salvaProduto);
 
     app.route('/produtos/:id')
-    .get(controller.obtemProduto);
+    .get(controller.obtemProduto)
+    .delete(controller.removeProduto);
 };

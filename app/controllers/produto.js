@@ -44,8 +44,13 @@ module.exports = function () {
             adiciona(produto);
 
         console.log(produto);
-        res.json(produto);
-        
+        res.json(produto);  
+    }
+
+    controller.removeProduto = function(req, res){
+        console.log(req.params.id);
+        remove(req.params.id);
+        res.status(204).end();
     }
 
     return controller;
@@ -65,4 +70,17 @@ function atualiza(produtoAlterar) {
         return produto;
     });
     return produtoAlterar;
+}
+
+function remove(idProduto){
+
+    var produtoExcluido;
+
+    produtos.forEach(function(produto) {
+        if(produto._id == idProduto){
+            produtoExcluido = produto;
+        }
+    }, this);
+
+    produtos = produtos.slice(produtos.indexOf(produtoExcluido),1);
 }
