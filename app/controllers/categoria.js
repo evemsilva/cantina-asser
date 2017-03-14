@@ -1,27 +1,18 @@
-var categorias = [
-    {
-        _id: 1,
-        descricao: "Bomboniere"
-    },
-    {
-        _id: 2,
-        descricao: "Doces"
-    },
-    {
-        _id: 3,
-        descricao: "Bebidas"
-    },
-    {
-        _id: 4,
-        descricao: "Salgados"
-    }
-];
-
-module.exports = function () {
+module.exports = function (app) {
     var controller = {};
+    Categoria = app.models.categoria;
 
     controller.listaCategorias = function (req, res) {
-        res.json(categorias);
+        Categoria.find().exec()
+            .then(
+                function (categorias) {
+                    res.json(categorias);
+                },
+                function (erro) {
+                    console.error(erro);
+                    res.status(500).json(erro);
+                }
+            );
     };
 
     return controller;
