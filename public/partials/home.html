@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="btn-group">
                                     <!-- Excluir Produto -->
-                                    <button title="Excluir Produto" class="btn btn-danger" ng-click="removeProduto(produto)">
+                                    <button title="Excluir Produto" class="btn btn-danger" ng-click="selecionarProduto(produto._id)" data-toggle="modal" data-target="#myModalYesNo">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                 </div>
@@ -98,3 +98,22 @@
 
     </div>
 </div>
+
+<!-- Modal Pergunta de Segurança -->
+<div id="myModalYesNo" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="limparProduto()"aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Pergunta</h4>
+      </div>
+      <div class="modal-body">
+        <p>Deseja excluir o produto <b>{{produto.nome}}</b>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="limparProduto()">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="removeProduto(produto)">Salvar Mudanças</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
