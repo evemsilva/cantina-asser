@@ -4,7 +4,10 @@ module.exports = function () {
     var schema = mongoose.Schema({
         nome: {
             type: String,
-            required: true
+            required: true,
+            index: {
+                unique: true
+            }
         },
         categoria: {
             type: mongoose.Schema.ObjectId,

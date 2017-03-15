@@ -4,7 +4,7 @@ var ObjectID = require('mongodb').ObjectID;
 // ObjectID de algum contato existente
 var _idProcurado = new ObjectID('58c72c06bbb374b78a4bc38a');
 
-MongoClient.connect('mongodb://127.0.0.1:27017/cantinaasserdb',
+MongoClient.connect('mongodb://127.0.0.1:27017/cantinaasser',
     function (erro, db) {
         if (erro) throw err;
         db.collection('categorias').findOne({ _id: _idProcurado },

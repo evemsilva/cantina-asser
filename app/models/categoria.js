@@ -2,9 +2,12 @@ var mongoose = require('mongoose');
 
 module.exports = function () {
     var schema = mongoose.Schema({
-        descricao: {
+        nome: {
             type: String,
-            required: true
+            required: true,
+            index: {
+                unique: true
+            }
         }
     });
 

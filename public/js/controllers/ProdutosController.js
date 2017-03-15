@@ -72,6 +72,7 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
     $scope.selecionarProduto = function (idProduto) {
         Produto.get({ id: idProduto },
             function (resultado) {
+                console.log(resultado);
                 $scope.produto = resultado;
             },
             function (erro) {
