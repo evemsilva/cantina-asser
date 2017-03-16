@@ -18,6 +18,7 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
     }*/
 
     $scope.produto = new Produto();
+    $scope.produtos = [];
 
     function buscaCategorias() {
         Categoria.query(
@@ -51,8 +52,6 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
     buscaCategorias();
 
     $scope.salva = function () {
-
-        console.log($scope.produto);
 
         $scope.produto.$save()
             .then(function () {
