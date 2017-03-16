@@ -1,12 +1,12 @@
-angular.module('cantina-asser').controller('ProdutosController', function ($scope, Produto, Categoria) {
+angular.module('cantina-asser').controller('ClientesController', function ($scope, Cliente, Curso) {
 
-    $scope.produto = new Produto();
-    $scope.produtos = [];
+    $scope.cliente = new Cliente();
+    $scope.clientes = [];
 
-    function buscaCategorias() {
-        Categoria.query(
+    function buscaCursos() {
+        Curso.query(
             function (resultado) {
-                $scope.categorias = resultado;
+                $scope.cursos = resultado;
                 $scope.mensagem = {};
             },
             function (erro) {
@@ -17,10 +17,10 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
         );
     }
 
-    function buscaProdutos() {
-        Produto.query(
+    function buscaClientes() {
+        Cliente.query(
             function (resultado) {
-                $scope.produtos = resultado;
+                $scope.clientes = resultado;
                 $scope.mensagem = {};
             },
             function (erro) {
@@ -31,21 +31,21 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
         );
     }
 
-    buscaProdutos();
-    buscaCategorias();
+    buscaClientes();
+    buscaCursos();
 
-    $scope.limparProduto = function () {
-        $scope.produto = new Produto();
+    $scope.limparCliente = function () {
+        $scope.cliente = new Cliente();
     }
 
     $scope.salva = function () {
-        $scope.produto.$save()
+        $scope.cliente.$save()
             .then(function () {
                 $scope.mensagem = {
                     texto: 'Salvo com sucesso'
                 };
-                $scope.produto = new Produto();
-                buscaProdutos();
+                $scope.cliente = new Cliente();
+                buscaClientes();
             })
             .catch(function (erro) {
                 $scope.mensagem = {
@@ -54,24 +54,24 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
             });
     };
 
-    $scope.selecionarProduto = function (idProduto) {
-        Produto.get({ id: idProduto },
+    $scope.selecionarCliente = function (idCliente) {
+        Cliente.get({ id: idCliente },
             function (resultado) {
                 console.log(resultado);
-                $scope.produto = resultado;
+                $scope.cliente = resultado;
             },
             function (erro) {
                 $scope.mensagem = {
-                    texto: 'Não foi possível obter o produto.'
+                    texto: 'Não foi possível obter o cliente.'
                 };
                 console.log(erro);
             }
         );
     }
 
-    $scope.removeProduto = function (produto) {
-        Produto.delete({ id: produto._id },
-            buscaProdutos,
+    $scope.removeCliente = function (cliente) {
+        Cliente.delete({ id: cliente._id },
+            buscaClientes,
             function (erro) {
                 $scope.mensagem = {
                     texto: 'Não foi possível remover o contato'

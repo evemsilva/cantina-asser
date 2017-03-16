@@ -11,8 +11,9 @@ angular.module('cantina-asser', ['ngRoute', 'ngResource', 'smart-table'])
       controller: 'ProdutosController'
     });
 
-    $routeProvider.when('/sobre', {
-      templateUrl: 'partials/sobre.html'
+    $routeProvider.when('/clientes', {
+      templateUrl: 'partials/clientes.html',
+      controller: 'ClientesController'
     });
 
     $routeProvider.when('/blog', {
