@@ -20,7 +20,6 @@ module.exports = function (app) {
         Produto.findById(_id).exec()
             .then(
                 function (produto) {
-                    console.log(produto);
                     if (!produto) throw new Error("Contato não encontrado");
                     res.json(produto);
                 },
@@ -33,6 +32,8 @@ module.exports = function (app) {
 
     controller.salvaProduto = function (req, res) {
         var _id = req.body._id;
+
+        console.log(req.body);
 
         var dados = {
             "nome": req.body.nome,
