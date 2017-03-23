@@ -2,6 +2,7 @@ module.exports = function (app) {
 
     var controller = {};
     var meuCarrinho = app.models.carrinhoCompra;
+    var carrinhoItem = app.models.carrinhoItem;
 
     controller.adicionaItem = function (req, res) {
 
@@ -12,14 +13,17 @@ module.exports = function (app) {
             categoria: req.body.categoria
         };
 
-        if(!req.session.carrinho) {
+        carrinhoItem.produto = dados;
+        console.log(carrinhoItem.produto);
+        carrinhoItem.quantidade = 1;
 
-
-        } else{
-            
-        }
+        meuCarrinho.itens.push(carrinhoItem);
+        console.log(meuCarrinho);
+        res.status(201).json(dados);
+        
 
 
     }
 
+    return controller;
 }
