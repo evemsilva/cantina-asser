@@ -1,7 +1,7 @@
 module.exports = function (app) {
     
     var carrinhoCompra = {
-        itens: [app.models.carrinhoItem]
+        itens: []
     }
 
     return carrinhoCompra;

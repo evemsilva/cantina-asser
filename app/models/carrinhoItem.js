@@ -2,7 +2,7 @@ module.exports = function (app) {
     
     var carrinhoItem = {
         produto: app.models.produto,
-        quantidade: Number
+        quantidade: 1
     }
 
     return carrinhoItem;
