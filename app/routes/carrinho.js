@@ -1,6 +1,15 @@
 module.exports = function (app) {
     var controller = app.controllers.carrinho;
-    app.get('/carrinho', controller.listaCarrinho)
-    .post('/carrinho', controller.adicionaItem)
-    .delete('/carrinho', controller.removeItem);
+    app.route('/carrinho/:id')
+        .delete(controller.removeItem);
+
+    app.route('/carrinho')
+        .get(controller.listaCarrinho)
+        .post(controller.adicionaItem);
+
+    app.route('/carrinho/alterar/:id')
+        .delete(controller.decrementaItem);
+
+    app.route('/carrinho/alterar')
+        .post(controller.incrementaItem);
 };

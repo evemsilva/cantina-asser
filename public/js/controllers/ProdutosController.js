@@ -1,7 +1,8 @@
-angular.module('cantina-asser').controller('ProdutosController', function ($scope, Produto, Categoria) {
+angular.module('cantina-asser').controller('ProdutosController', function ($scope, Produto, Categoria, Carrinho) {
 
     $scope.produto = new Produto();
     $scope.produtos = [];
+    $scope.carrinho = new Carrinho();
 
     function buscaCategorias() {
         Categoria.query(
@@ -79,6 +80,17 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
                 console.log(erro);
             }
         );
+    };
+
+    $scope.adicionaCarrinho = function (produto) {
+        $scope.carrinho.produto = produto;
+        $scope.carrinho.$save()
+            .then(function () {
+                $scope.carrinho = new Carrinho();
+            })
+            .catch(function (erro) {
+               console.log(erro);
+            });
     };
 
 });

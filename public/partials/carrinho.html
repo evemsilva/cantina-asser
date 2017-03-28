@@ -9,11 +9,11 @@
             <div class="table-responsive">
                 <table class="table table-condensed display" style="text-align: center">
                     <thead>
-                        <td><b>Item</b></td>
+                        <td><b>Produto</b></td>
                         <td><b>Preço Unitario</b></td>
                         <td><b>Quantidade</b></td>
-                        <td><b>Preço Total</b></td>
-                        <td>Acao</td>
+                        <td><b>Preço Calculado</b></td>
+                        <td><b>Ação</b></td>
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in carrinho.itens">
@@ -22,13 +22,13 @@
                             <td>{{item.qtdeItem}}</td>
                             <td>{{item.valorItem | currency}}</td>
                             <td>
-                                <button title="Adicionar um" class="btn btn-primary">
+                                <button title="Adicionar um" ng-click="incrementaItem(item.produto._id)" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
-                                <button title="Remover um" class="btn btn-warning">
+                                <button title="Remover um" ng-click="decrementaItem(item.produto._id)" class="btn btn-warning">
                                     <span class="glyphicon glyphicon-minus"></span>
                                 </button>
-                                <button title="Excluir item" class="btn btn-danger">
+                                <button title="Excluir item" ng-click="removeItem(item.produto._id)" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
                             </td>

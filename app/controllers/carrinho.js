@@ -45,15 +45,11 @@ module.exports = function (app) {
 
         var encontrado = false;
 
-        if (req.session.carrinho) {
-            meuCarrinho = req.session.carrinho;
-        }
-
         var dados = {
-            _id: req.body._id,
-            nome: req.body.nome,
-            preco: req.body.preco,
-            categoria: req.body.categoria
+            _id: req.body.produto._id,
+            nome: req.body.produto.nome,
+            preco: req.body.produto.preco,
+            categoria: req.body.produto.categoria
         };
 
         meuCarrinho.itens.forEach(function (item, index) {
@@ -73,13 +69,12 @@ module.exports = function (app) {
         }
 
         somaTotaisCarrinho(meuCarrinho);
-        req.session.carrinho = meuCarrinho;
         res.status(201).json(meuCarrinho);
     }
 
     controller.removeItem = function (req, res) {
 
-        let _id = req.body._id;
+        let _id = req.params.id;
         let indice = -1;
 
         meuCarrinho.itens.forEach(function (item, index) {
@@ -99,12 +94,11 @@ module.exports = function (app) {
     }
 
     controller.incrementaItem = function (req, res) {
-
-        let _id = req.body._id;
+        let _id = req.body.id;
         var encontrado = false;
 
         meuCarrinho.itens.forEach(function (item, index) {
-            if (dados._id == item.produto._id) {
+            if (_id == item.produto._id) {
                 item.qtdeItem += 1;
                 item.valorItem += item.produto.preco;
                 encontrado = true;
@@ -112,6 +106,7 @@ module.exports = function (app) {
         });
 
         if (encontrado) {
+            somaTotaisCarrinho(meuCarrinho);
             res.status(201).end();
         } else {
             res.status(404).send('Produto não encontrado');
@@ -120,8 +115,7 @@ module.exports = function (app) {
     }
 
     controller.decrementaItem = function (req, res) {
-
-        let _id = req.body._id;
+        let _id = req.params.id;
         let indice = -1;
         let qtdeItem = -1;
 
@@ -134,10 +128,16 @@ module.exports = function (app) {
             }
         });
 
-        if (indice > -1 && qtdeItem == 0) {
-            meuCarrinho.itens.splice(indice, 1);
-            somaTotaisCarrinho(meuCarrinho);
-            res.status(204).end();
+        if (indice > -1) {
+
+            if (qtdeItem == 0) {
+                meuCarrinho.itens.splice(indice, 1);
+                somaTotaisCarrinho(meuCarrinho);
+                res.status(204).end();
+            } else {
+                somaTotaisCarrinho(meuCarrinho);
+                res.status(204).end();
+            }
         } else {
             res.status(404).send('Produto não encontrado');
         }

@@ -33,8 +33,6 @@ module.exports = function (app) {
     controller.salvaProduto = function (req, res) {
         var _id = req.body._id;
 
-        console.log(req.body);
-
         var dados = {
             "nome": req.body.nome,
             "preco": req.body.preco,

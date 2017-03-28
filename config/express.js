@@ -18,12 +18,7 @@ module.exports = function () {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
-    app.use(session({
-        secret: 'keyboard cat',
-        resave: false,
-        saveUninitialized: true,
-        cookie: { secure: true }
-    }));
+    app.use(session({secret:'somesecrettokenhere'}));
 
     app.use(require('method-override')());
 
