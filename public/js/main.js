@@ -17,7 +17,8 @@ angular.module('cantina-asser', ['ngRoute', 'ngResource', 'smart-table'])
     });
 
     $routeProvider.when('/carrinho', {
-      templateUrl: 'partials/carrinho.html'
+      templateUrl: 'partials/carrinho.html',
+      controller: 'CarrinhoController'
     });
 
     $routeProvider.when('/contato', {

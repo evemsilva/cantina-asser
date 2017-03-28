@@ -1,4 +1,6 @@
 module.exports = function (app) {
     var controller = app.controllers.carrinho;
-    app.post('/carrinho', controller.adicionaItem);
+    app.get('/carrinho', controller.listaCarrinho)
+    .post('/carrinho', controller.adicionaItem)
+    .delete('/carrinho', controller.removeItem);
 };

@@ -10,18 +10,24 @@
                 <table class="table table-condensed display" style="text-align: center">
                     <thead>
                         <td><b>Item</b></td>
-                        <td><b>Preço</b></td>
+                        <td><b>Preço Unitario</b></td>
                         <td><b>Quantidade</b></td>
-                        <td><b>Total</b></td>
-                        <td></td>
+                        <td><b>Preço Total</b></td>
+                        <td>Acao</td>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Coxinha</td>
-                            <td>R$ 2,50</td>
-                            <td><input type="number" maxlength="2"/></td>
-                            <td>R$ 5,00</td>
+                        <tr ng-repeat="item in carrinho.itens">
+                            <td>{{item.produto.nome}}</td>
+                            <td>{{item.produto.preco | currency}}</td>
+                            <td>{{item.qtdeItem}}</td>
+                            <td>{{item.valorItem | currency}}</td>
                             <td>
+                                <button title="Adicionar um" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                                <button title="Remover um" class="btn btn-warning">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
                                 <button title="Excluir item" class="btn btn-danger">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
@@ -34,8 +40,9 @@
                                 <button title="Finalizar Compra" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-saved"></span>
                                 </button></td>
-                            <td colspan="2"></td>
-                            <td>Total Compra</td>
+                            <td></td>
+                            <td><b>{{carrinho.qtdeTotal}}</b></td>
+                            <td><b>{{carrinho.valorTotal | currency}}</b></td>
                         </tr>
                     </tfoot>
                 </table>

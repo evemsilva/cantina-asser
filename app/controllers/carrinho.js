@@ -5,6 +5,13 @@ module.exports = function (app) {
 
     meuCarrinho.itens = [];
 
+    var chocolate = {
+        "_id": "58c8a4e06b24b41e88c1ed7e",
+        "nome": "Diamante Negro",
+        "preco": 1,
+        "categoria": "58c8a48b8fece38e1c8c62ed"
+    }
+
     var fanta = {
         "_id": "58c922cfbc861c43146eab70",
         "nome": "Fanta Laranja",
@@ -20,7 +27,6 @@ module.exports = function (app) {
     }
 
     function somaTotaisCarrinho(carrinho) {
-
         carrinho.qtdeTotal = 0;
         carrinho.valorTotal = 0;
 
@@ -28,6 +34,11 @@ module.exports = function (app) {
             carrinho.qtdeTotal += item.qtdeItem;
             carrinho.valorTotal += item.valorItem;
         });
+    }
+
+    controller.listaCarrinho = function (req, res) {
+        somaTotaisCarrinho(meuCarrinho);
+        res.status(200).json(meuCarrinho);
     }
 
     controller.adicionaItem = function (req, res) {
@@ -62,26 +73,76 @@ module.exports = function (app) {
         }
 
         somaTotaisCarrinho(meuCarrinho);
-
-        console.log(meuCarrinho.itens);
         req.session.carrinho = meuCarrinho;
         res.status(201).json(meuCarrinho);
     }
 
-    controller.removeItem = function(req, resp){
+    controller.removeItem = function (req, res) {
 
         let _id = req.body._id;
+        let indice = -1;
 
-        let indice = meuCarrinho.itens.forEach(function (item, index) {
+        meuCarrinho.itens.forEach(function (item, index) {
             if (_id == item.produto._id) {
-               return index;
+                indice = index;
             }
         });
 
-        delete meuCarrinho.itens[indice];
+        if (indice > -1) {
+            meuCarrinho.itens.splice(indice, 1);
+            somaTotaisCarrinho(meuCarrinho);
+            res.status(204).end();
+        } else {
+            res.status(404).send('Produto não encontrado');
+        }
 
-        res.status(202).json(meuCarrinho);
-    } 
+    }
+
+    controller.incrementaItem = function (req, res) {
+
+        let _id = req.body._id;
+        var encontrado = false;
+
+        meuCarrinho.itens.forEach(function (item, index) {
+            if (dados._id == item.produto._id) {
+                item.qtdeItem += 1;
+                item.valorItem += item.produto.preco;
+                encontrado = true;
+            }
+        });
+
+        if (encontrado) {
+            res.status(201).end();
+        } else {
+            res.status(404).send('Produto não encontrado');
+        }
+
+    }
+
+    controller.decrementaItem = function (req, res) {
+
+        let _id = req.body._id;
+        let indice = -1;
+        let qtdeItem = -1;
+
+        meuCarrinho.itens.forEach(function (item, index) {
+            if (_id == item.produto._id) {
+                item.qtdeItem -= 1;
+                item.valorItem -= item.produto.preco;
+                indice = index;
+                qtdeItem = item.qtdeItem;
+            }
+        });
+
+        if (indice > -1 && qtdeItem == 0) {
+            meuCarrinho.itens.splice(indice, 1);
+            somaTotaisCarrinho(meuCarrinho);
+            res.status(204).end();
+        } else {
+            res.status(404).send('Produto não encontrado');
+        }
+
+    }
 
 
 
