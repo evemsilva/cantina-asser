@@ -5,27 +5,6 @@ module.exports = function (app) {
 
     meuCarrinho.itens = [];
 
-    var chocolate = {
-        "_id": "58c8a4e06b24b41e88c1ed7e",
-        "nome": "Diamante Negro",
-        "preco": 1,
-        "categoria": "58c8a48b8fece38e1c8c62ed"
-    }
-
-    var fanta = {
-        "_id": "58c922cfbc861c43146eab70",
-        "nome": "Fanta Laranja",
-        "preco": 2.99,
-        "categoria": "58c922874564dd22f1614c31"
-    };
-
-    var suspiro = {
-        "_id": "58c922ecbc861c43146eab71",
-        "nome": "Suspiro",
-        "preco": 1.5,
-        "categoria": "58c922914564dd22f1614c32"
-    }
-
     function somaTotaisCarrinho(carrinho) {
         carrinho.qtdeTotal = 0;
         carrinho.valorTotal = 0;
@@ -42,7 +21,6 @@ module.exports = function (app) {
     }
 
     controller.adicionaItem = function (req, res) {
-
         var encontrado = false;
 
         var dados = {
@@ -73,7 +51,6 @@ module.exports = function (app) {
     }
 
     controller.removeItem = function (req, res) {
-
         let _id = req.params.id;
         let indice = -1;
 
@@ -144,7 +121,25 @@ module.exports = function (app) {
 
     }
 
+    controller.finalizarCompra = function (req, res) {
+        console.log('Chegou no backend');
+        console.log(req.body);
+        var carrinho = req.body;
+        var pagamentos = [];
+        
+        carrinho.itens.forEach(function (item, index) {
+            let pagamento = {};
+            pagamento.cliente = carrinho.cliente;
+            pagamento.data = new Date();
+            pagamento.produto = item.produto.nome;
+            pagamento.quantidade = item.qtdeItem;
+            pagamento.valorItem = item.valorItem;
+            pagamentos.push(pagamento);
 
+        });
+
+        res.status(201).json(pagamentos);
+    }
 
     return controller;
 }

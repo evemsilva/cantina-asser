@@ -12,4 +12,7 @@ module.exports = function (app) {
 
     app.route('/carrinho/alterar')
         .post(controller.incrementaItem);
+
+    app.route('/carrinho/finalizarCompra')
+        .post(controller.finalizarCompra);
 };

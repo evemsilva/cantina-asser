@@ -1,7 +1,8 @@
-angular.module('cantina-asser').controller('CarrinhoController', function ($scope, Carrinho, CarrinhoItem) {
+angular.module('cantina-asser').controller('CarrinhoController', function ($scope, $http, Carrinho, CarrinhoItem, Cliente) {
 
     $scope.carrinho = {};
     $scope.carrinhoItem = new CarrinhoItem();
+    $scope.clientes = [];
 
     function buscaCarrinho() {
         Carrinho.get(
@@ -18,7 +19,23 @@ angular.module('cantina-asser').controller('CarrinhoController', function ($scop
         );
     }
 
+    function buscaClientes() {
+        Cliente.query(
+            function (resultado) {
+                $scope.clientes = resultado;
+                $scope.mensagem = {};
+            },
+            function (erro) {
+                console.log(erro);
+                $scope.mensagem = {
+                    texto: 'Não foi possível obter a lista'
+                };
+            }
+        );
+    }
+
     buscaCarrinho();
+    buscaClientes();
 
     $scope.removeItem = function (produtoId) {
         Carrinho.delete({ id: produtoId },
@@ -55,6 +72,17 @@ angular.module('cantina-asser').controller('CarrinhoController', function ($scop
                 console.log(erro);
             }
         );
+    }
+
+    $scope.finalizaCompra = function (carrinho) {
+        console.log(carrinho);
+        $http.post('/carrinho/finalizarCompra', carrinho)
+            .success(function (data) {
+                console.log(data);
+        }).error(function (erro) {
+            console.log(erro);
+        });
+
     }
 
 });

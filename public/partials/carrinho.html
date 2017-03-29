@@ -1,12 +1,12 @@
 <div class="row">
-     <div class="box">
+    <div class="box">
         <div class="col-lg-12">
             <hr>
             <h2 class="intro-text text-center">Carrinho de
                 <strong>Compras</strong>
             </h2>
             <hr>
-            <div class="table-responsive">
+            <div class="table-responsive" ng-show="carrinho.itens.length">
                 <table class="table table-condensed display" style="text-align: center">
                     <thead>
                         <td><b>Produto</b></td>
@@ -36,18 +36,26 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td>
-                                <button title="Finalizar Compra" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-saved"></span>
-                                </button></td>
-                            <td></td>
+                            <td colspan="2">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">Cliente:</span>
+                                    <select class="form-control" ng-model="carrinho.cliente" ng-options="cliente._id as cliente.nome for cliente in clientes">
+                                    </select>
+                                </div>
+                            </td>
                             <td><b>{{carrinho.qtdeTotal}}</b></td>
                             <td><b>{{carrinho.valorTotal | currency}}</b></td>
                         </tr>
                     </tfoot>
                 </table>
+                <button title="Fazer Checkout" ng-click="finalizaCompra(carrinho)" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Fazer Checkout
+                </button>
+            </div>
 
+            <div ng-hide="carrinho.itens.length">
+                <h4 class="intro-text text-center">Não há produtos no carrinho</h4>
             </div>
         </div>
-     </div>
+    </div>
 </div>
