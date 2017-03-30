@@ -2,8 +2,9 @@ module.exports = function (app) {
 
     var controller = {};
     let meuCarrinho = {};
-
     meuCarrinho.itens = [];
+    var Lancamento = app.models.lancamento;
+
 
     function somaTotaisCarrinho(carrinho) {
         carrinho.qtdeTotal = 0;
@@ -122,23 +123,30 @@ module.exports = function (app) {
     }
 
     controller.finalizarCompra = function (req, res) {
-        console.log('Chegou no backend');
-        console.log(req.body);
-        var carrinho = req.body;
-        var pagamentos = [];
-        
-        carrinho.itens.forEach(function (item, index) {
-            let pagamento = {};
-            pagamento.cliente = carrinho.cliente;
-            pagamento.data = new Date();
-            pagamento.produto = item.produto.nome;
-            pagamento.quantidade = item.qtdeItem;
-            pagamento.valorItem = item.valorItem;
-            pagamentos.push(pagamento);
 
+        var carrinho = req.body;
+
+        carrinho.itens.forEach(function (item, index) {
+            let novoLancamento = {};
+            novoLancamento.cliente = carrinho.cliente;
+            novoLancamento.produto = item.produto.nome;
+            novoLancamento.quantidade = item.qtdeItem;
+            novoLancamento.valor = item.valorItem;
+            novoLancamento.tipo = 0;
+
+            Lancamento.create(novoLancamento)
+                .then(
+                function (resultado) {
+                    console.log(resultado);
+                },
+                function (erro) {
+                    console.log(erro);
+                    res.status(500).json(erro);
+                }
+                );
         });
 
-        res.status(201).json(pagamentos);
+        res.status(201).send('Compra finalizada com sucesso!');
     }
 
     return controller;

@@ -5,7 +5,8 @@ module.exports = function () {
         
         cliente: {
             type: mongoose.Schema.ObjectId,
-            ref: 'Cliente'
+            ref: 'Cliente',
+            required: true
         },
 
         data: {
@@ -27,8 +28,13 @@ module.exports = function () {
         valor: {
             type: Number,
             required: true,
+        },
+
+        tipo: {
+            type: Number,
+            required: true, 
         }
     });
 
-    return mongoose.model('Pagamento', schema);
+    return mongoose.model('Lancamento', schema);
 };

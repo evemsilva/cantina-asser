@@ -21,8 +21,9 @@ angular.module('cantina-asser', ['ngRoute', 'ngResource', 'smart-table'])
       controller: 'CarrinhoController'
     });
 
-    $routeProvider.when('/contato', {
-      templateUrl: 'partials/contato.html'
+    $routeProvider.when('/lancamentos', {
+      templateUrl: 'partials/lancamento.html',
+      controller: 'LancamentoController'
     });
 
     $routeProvider.otherwise({ redirectTo: '/produtos' });
