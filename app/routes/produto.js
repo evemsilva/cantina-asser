@@ -1,10 +1,18 @@
+function verificaAutenticacao(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.status('401').json('Não autorizado');
+    }
+}
+
 module.exports = function (app) {
     var controller = app.controllers.produto;
     app.route('/produtos')
-    .get(controller.listaProdutos)
-    .post(controller.salvaProduto);
+        .get(verificaAutenticacao, controller.listaProdutos)
+        .post(controller.salvaProduto);
 
     app.route('/produtos/:id')
-    .get(controller.obtemProduto)
-    .delete(controller.removeProduto);
+        .get(controller.obtemProduto)
+        .delete(controller.removeProduto);
 };
