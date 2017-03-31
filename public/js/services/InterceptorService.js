@@ -8,7 +8,7 @@ angular.module('cantina-asser')
             responseError: function (resposta) {
 
                 if (resposta.status == 401) {
-                    $location.path('/auth');
+                    $location.path('/login');
                 }
                 return $q.reject(resposta);
             }

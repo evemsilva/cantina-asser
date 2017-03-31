@@ -8,7 +8,6 @@ module.exports = function () {
 
     passport.use(new LocalStrategy(function (username, password, done) {
         process.nextTick(function () {
-            // Auth Check Logic
             Usuario.findOne({
                 'username': username,
             }, function (err, user) {

@@ -10,7 +10,7 @@ module.exports = function (app) {
     var controller = app.controllers.produto;
     app.route('/produtos')
         .get(verificaAutenticacao, controller.listaProdutos)
-        .post(controller.salvaProduto);
+        .post(verificaAutenticacao, controller.salvaProduto);
 
     app.route('/produtos/:id')
         .get(controller.obtemProduto)

@@ -29,8 +29,9 @@ angular.module('cantina-asser', ['ngRoute', 'ngResource', 'smart-table'])
       controller: 'LancamentoController'
     });
 
-    $routeProvider.when('/auth', {
-      templateUrl: 'partials/auth.html'
+    $routeProvider.when('/login', {
+      templateUrl: 'partials/login.html',
+      controller: 'LoginController'
     });
 
     $routeProvider.otherwise({ redirectTo: '/' });
