@@ -13,6 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-datepicker3.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="css/business-casual.css" rel="stylesheet">
@@ -35,7 +36,10 @@
 <body>
 
     <div class="brand">Cantina Asser</div>
-    <div class="address-bar">Usuario logado: <%=nome %> | <a style="color: white" href="/logout">Logout</a></div>
+    
+    <%if(usuario) { %>
+        <div class="address-bar">Usuario logado: <%=usuario %> | <a style="color: white" href="/logout">Logout</a></div>
+    <% } %>
 
     <!-- Navigation -->
     <nav class="navbar navbar-default" role="navigation">
@@ -96,6 +100,10 @@
 
     <!-- jQuery -->
     <script src="vendor/jquery/dist/jquery.js"></script>
+
+    <!-- Bootstrap Date Picker -->
+    <script src="vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="vendor/bootstrap-datepicker/bootstrap-datepicker.pt-BR.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>

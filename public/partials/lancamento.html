@@ -6,8 +6,45 @@
                 <strong>Lançamentos</strong>
             </h2>
             <hr>
-            <div class="table-responsive">    
-                <table id="tabelaClientes" st-table="resultado" st-safe-src="lancamentos" class="table table-condensed display" style="text-align: center"> 
+
+            <form method="post">
+
+                <div class="form-group col-md-6">
+                    <label>Cliente: </label>
+                    <select class="form-control">
+                    <select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Tipo de Operação: </label>
+                    <select class="form-control">
+                    </select>
+                </div>
+                <div id="sandbox-container" class="form-group col-md-6">
+                    <label>Data Inicial:</label>
+                    <div class="input-group date">
+                        <input  class="form-control" />
+                        <label for="dataInicial" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
+                    </div>
+                </div>
+                <div id="sandbox-container" class="form-group col-md-6">
+                    <label>Data Final:</label>
+                    <div class="input-group date">
+                        <input id='dataFinal' class="form-control" />
+                        <label for="dataFinal" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+								 	<span class="glyphicon glyphicon-search"></span> Pesquisar
+								 </button>
+                <a href='/' class="btn btn-default">
+                    <span class="glyphicon glyphicon-usd"></span> Efetuar Pagamento
+                </a>
+            </form>
+
+            <hr>
+
+            <div class="table-responsive">
+                <table id="tabelaLancamentos" st-table="resultado" st-safe-src="lancamentos" class="table table-condensed display" style="text-align: center">
                     <thead>
                         <tr class="info">
                             <td><b>Cliente</b></td>
@@ -30,7 +67,12 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="4" class="text-center">
+                            <td colspan="2">Total Pago: R$ 200</td>
+                            <td colspan="2">Total Devido: R$ 90,00</td>
+                            <td colspan="2">Saldo: R$ $110,00</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" class="text-center">
                                 <div st-pagination="" st-items-by-page="10" st-displayed-pages="10"></div>
                             </td>
                         </tr>
@@ -39,4 +81,16 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $('#dataFinal').datepicker({
+            format: 'dd/mm/yyyy',
+            startDate: '01/01/2016',
+            endDate: '31/12/2040',
+            language: 'pt-BR',
+            keyboardNavigation: false,
+            autoclose: true
+        });
+    </script>
+
 </div>

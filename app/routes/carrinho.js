@@ -1,18 +1,20 @@
 module.exports = function (app) {
     var controller = app.controllers.carrinho;
+    var autenticador = app.controllers.auth;
+
     app.route('/carrinho/:id')
-        .delete(controller.removeItem);
+        .delete(autenticador.verificaAutenticacao, controller.removeItem);
 
     app.route('/carrinho')
-        .get(controller.listaCarrinho)
-        .post(controller.adicionaItem);
+        .get(autenticador.verificaAutenticacao, controller.listaCarrinho)
+        .post(autenticador.verificaAutenticacao, controller.adicionaItem);
 
     app.route('/carrinho/alterar/:id')
-        .delete(controller.decrementaItem);
+        .delete(autenticador.verificaAutenticacao, controller.decrementaItem);
 
     app.route('/carrinho/alterar')
-        .post(controller.incrementaItem);
+        .post(autenticador.verificaAutenticacao, controller.incrementaItem);
 
     app.route('/carrinho/finalizarCompra')
-        .post(controller.finalizarCompra);
+        .post(autenticador.verificaAutenticacao, controller.finalizarCompra);
 };

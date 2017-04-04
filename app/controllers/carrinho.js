@@ -1,8 +1,10 @@
 module.exports = function (app) {
 
     var controller = {};
+    /*
     let meuCarrinho = {};
     meuCarrinho.itens = [];
+    */
     var Lancamento = app.models.lancamento;
 
 
@@ -17,11 +19,23 @@ module.exports = function (app) {
     }
 
     controller.listaCarrinho = function (req, res) {
-        somaTotaisCarrinho(meuCarrinho);
-        res.status(200).json(meuCarrinho);
+        
+        if(!req.session.carinho){
+            req.session.carinho = {};
+            req.session.carinho.itens = [];
+        }
+        
+        somaTotaisCarrinho(req.session.carinho);
+        res.status(200).json(req.session.carinho);
     }
 
     controller.adicionaItem = function (req, res) {
+
+         if(!req.session.carinho){
+            req.session.carinho = {};
+            req.session.carinho.itens = [];
+        }
+
         var encontrado = false;
 
         var dados = {
@@ -31,7 +45,7 @@ module.exports = function (app) {
             categoria: req.body.produto.categoria
         };
 
-        meuCarrinho.itens.forEach(function (item, index) {
+        req.session.carinho.itens.forEach(function (item, index) {
             if (dados._id == item.produto._id) {
                 item.qtdeItem += 1;
                 item.valorItem += item.produto.preco;
@@ -44,26 +58,26 @@ module.exports = function (app) {
             carrinhoItem.produto = dados;
             carrinhoItem.qtdeItem = 1;
             carrinhoItem.valorItem = carrinhoItem.produto.preco;
-            meuCarrinho.itens.push(carrinhoItem);
+            req.session.carinho.itens.push(carrinhoItem);
         }
 
-        somaTotaisCarrinho(meuCarrinho);
-        res.status(201).json(meuCarrinho);
+        somaTotaisCarrinho(req.session.carinho);
+        res.status(201).json(req.session.carinho);
     }
 
     controller.removeItem = function (req, res) {
         let _id = req.params.id;
         let indice = -1;
 
-        meuCarrinho.itens.forEach(function (item, index) {
+        req.session.carinho.itens.forEach(function (item, index) {
             if (_id == item.produto._id) {
                 indice = index;
             }
         });
 
         if (indice > -1) {
-            meuCarrinho.itens.splice(indice, 1);
-            somaTotaisCarrinho(meuCarrinho);
+            req.session.carinho.itens.splice(indice, 1);
+            somaTotaisCarrinho(req.session.carinho);
             res.status(204).end();
         } else {
             res.status(404).send('Produto não encontrado');
@@ -75,7 +89,7 @@ module.exports = function (app) {
         let _id = req.body.id;
         var encontrado = false;
 
-        meuCarrinho.itens.forEach(function (item, index) {
+        req.session.carinho.itens.forEach(function (item, index) {
             if (_id == item.produto._id) {
                 item.qtdeItem += 1;
                 item.valorItem += item.produto.preco;
@@ -84,7 +98,7 @@ module.exports = function (app) {
         });
 
         if (encontrado) {
-            somaTotaisCarrinho(meuCarrinho);
+            somaTotaisCarrinho(req.session.carinho);
             res.status(201).end();
         } else {
             res.status(404).send('Produto não encontrado');
@@ -97,7 +111,7 @@ module.exports = function (app) {
         let indice = -1;
         let qtdeItem = -1;
 
-        meuCarrinho.itens.forEach(function (item, index) {
+        req.session.carinho.itens.forEach(function (item, index) {
             if (_id == item.produto._id) {
                 item.qtdeItem -= 1;
                 item.valorItem -= item.produto.preco;
@@ -109,11 +123,11 @@ module.exports = function (app) {
         if (indice > -1) {
 
             if (qtdeItem == 0) {
-                meuCarrinho.itens.splice(indice, 1);
-                somaTotaisCarrinho(meuCarrinho);
+                req.session.carinho.itens.splice(indice, 1);
+                somaTotaisCarrinho(req.session.carinho);
                 res.status(204).end();
             } else {
-                somaTotaisCarrinho(meuCarrinho);
+                somaTotaisCarrinho(req.session.carinho);
                 res.status(204).end();
             }
         } else {
@@ -146,6 +160,7 @@ module.exports = function (app) {
                 );
         });
 
+        req.session.carinho = null;
         res.status(201).send('Compra finalizada com sucesso!');
     }
 

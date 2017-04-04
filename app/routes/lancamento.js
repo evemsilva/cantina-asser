@@ -1,4 +1,5 @@
 module.exports = function (app) {
     var controller = app.controllers.lancamento;
-    app.get('/lancamentos', controller.listaLancamentos);
+    var autenticador = app.controllers.auth;
+    app.get('/lancamentos', autenticador.verificaAutenticacao, controller.listaLancamentos);
 };

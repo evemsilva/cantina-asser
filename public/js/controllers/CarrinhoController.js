@@ -78,7 +78,7 @@ angular.module('cantina-asser').controller('CarrinhoController', function ($scop
         console.log(carrinho);
         $http.post('/carrinho/finalizarCompra', carrinho)
             .success(function (data) {
-                console.log(data);
+                buscaCarrinho();
         }).error(function (erro) {
             console.log(erro);
         });

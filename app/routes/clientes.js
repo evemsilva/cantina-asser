@@ -1,10 +1,12 @@
 module.exports = function (app) {
     var controller = app.controllers.cliente;
+    var autenticador = app.controllers.auth;
+
     app.route('/clientes')
-    .get(controller.listaClientes)
-    .post(controller.salvaCliente);
+    .get(autenticador.verificaAutenticacao, controller.listaClientes)
+    .post(autenticador.verificaAutenticacao, controller.salvaCliente);
 
     app.route('/clientes/:id')
-    .get(controller.obtemCliente)
-    .delete(controller.removeCliente);
+    .get(autenticador.verificaAutenticacao, controller.obtemCliente)
+    .delete(autenticador.verificaAutenticacao, controller.removeCliente);
 };

@@ -1,9 +1,16 @@
 module.exports = function () {
     var controller = {};
-    
+
     controller.index = function (req, res) {
-        res.render('index', {nome: 'Everton'});
+
+        var login = '';
+
+        if (req.user) {
+            login = req.user.username;
+        }
+
+        res.render('index', {usuario: login});
     };
-    
+
     return controller;
 }

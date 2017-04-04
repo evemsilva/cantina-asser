@@ -1,20 +1,14 @@
 <div class="row">
     <div class="box">
-        <div class="col-lg-12">
+        <div class="col-lg-4 col-lg-offset-4">
             {{mensagem}}
-            <form role="form" ng-submit="efetuarLogin(usuario)">
-                <div>
-                    <label>Username:</label>
-                    <input type="text" ng-model="usuario.username" />
-                    <br/>
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" ng-model="usuario.password" />
-                </div>
-                <div>
-                    <input type="submit" value="Submit" />
-                </div>
+            <form class="form-signin" ng-submit="efetuarLogin(usuario)">
+                <h4 class="form-signin-heading text-center">Favor logar-se</h4>
+                <label for="inputEmail" class="sr-only">Usuario</label>
+                <input type="text" id="inputEmail" class="form-control" placeholder="Usuario" ng-model="usuario.username" required autofocus>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Senha" ng-model="usuario.password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Fazer login</button>
             </form>
         </div>
     </div>
