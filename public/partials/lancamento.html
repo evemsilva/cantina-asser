@@ -7,29 +7,31 @@
             </h2>
             <hr>
 
-            <form method="post">
+            <form method="post" ng-submit="pesquisaLancamento(filtro)">
 
                 <div class="form-group col-md-6">
                     <label>Cliente: </label>
-                    <select class="form-control">
-                    <select>
+                    <select class="form-control"  ng-model="filtro.cliente" ng-options="cliente._id as cliente.nome for cliente in clientes">
+                        <option value="">Selecione</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-6">
                     <label>Tipo de Operação: </label>
-                    <select class="form-control">
+                    <select class="form-control" ng-model="filtro.tipo" ng-options="tipo._id as tipo.label for tipo in tipos">
+                        <option value="">Selecione</option>
                     </select>
                 </div>
                 <div id="sandbox-container" class="form-group col-md-6">
                     <label>Data Inicial:</label>
                     <div class="input-group date">
-                        <input  class="form-control" />
+                        <input  class="form-control" ng-model="filtro.dataInicial" />
                         <label for="dataInicial" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
                     </div>
                 </div>
                 <div id="sandbox-container" class="form-group col-md-6">
                     <label>Data Final:</label>
                     <div class="input-group date">
-                        <input id='dataFinal' class="form-control" />
+                        <input id='dataFinal' class="form-control" ng-model="filtro.dataInicial" />
                         <label for="dataFinal" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
                     </div>
                 </div>
@@ -67,9 +69,9 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2">Total Pago: R$ 200</td>
-                            <td colspan="2">Total Devido: R$ 90,00</td>
-                            <td colspan="2">Saldo: R$ $110,00</td>
+                            <td colspan="2">Total Pago: {{totalPago | currency}}</td>
+                            <td colspan="2">Total Devido: {{totalDevido | currency}}</td>
+                            <td colspan="2">Saldo: {{saldo | currency}}</td>
                         </tr>
                         <tr>
                             <td colspan="6" class="text-center">
