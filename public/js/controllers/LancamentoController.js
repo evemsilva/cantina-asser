@@ -54,6 +54,7 @@ angular.module('cantina-asser').controller('LancamentoController', function ($sc
     }
 
     $scope.pesquisaLancamento = function (filtro) {
+        console.log(filtro);
         $http.post('/lancamentos/pesquisar', filtro)
             .success(function (resultado) {
                 $scope.lancamentos = resultado;

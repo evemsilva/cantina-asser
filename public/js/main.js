@@ -1,4 +1,4 @@
-angular.module('cantina-asser', ['ngRoute', 'ngResource', 'smart-table'])
+angular.module('cantina-asser', ['ngRoute', 'ngResource', 'smart-table','datetimepicker'])
   .config(function ($routeProvider, $httpProvider) {
 
     // Interceptador de requisicao
