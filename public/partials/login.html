@@ -1,8 +1,13 @@
 <div class="row">
     <div class="box">
         <div class="col-lg-4 col-lg-offset-4">
-            {{mensagem}}
             <form class="form-signin" ng-submit="efetuarLogin(usuario)">
+
+                <div ng-show="mensagem" class="alert alert-danger alert-dismissable text-center">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <strong>{{mensagem}}</strong>
+                </div>
+
                 <h4 class="form-signin-heading text-center">Favor logar-se</h4>
                 <label for="inputEmail" class="sr-only">Usuario</label>
                 <input type="text" id="inputEmail" class="form-control" placeholder="Usuario" ng-model="usuario.username" required autofocus>

@@ -17,12 +17,10 @@ module.exports = function () {
 
         produto: {
             type: String,
-            required: true,
         },
 
         quantidade: {
             type: Number,
-            required: true,
         },
 
         valor: {

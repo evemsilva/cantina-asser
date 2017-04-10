@@ -2,6 +2,7 @@ angular.module('cantina-asser').controller('LancamentoController', function ($sc
 
     $scope.lancamentos = [];
     $scope.filtro = {};
+    $scope.pagamento = {};
     
     $scope.tipos = [{
         _id: 0,
@@ -54,7 +55,6 @@ angular.module('cantina-asser').controller('LancamentoController', function ($sc
     }
 
     $scope.pesquisaLancamento = function (filtro) {
-        console.log(filtro);
         $http.post('/lancamentos/pesquisar', filtro)
             .success(function (resultado) {
                 $scope.lancamentos = resultado;
@@ -62,7 +62,22 @@ angular.module('cantina-asser').controller('LancamentoController', function ($sc
         }).error(function (erro) {
             console.log(erro);
         });
+    }
 
+    $scope.efetuarPagamento = function (pagamento) {
+        $http.post('/lancamentos/finalizarPagamento', pagamento)
+            .success(function (data) {
+                $scope.filtro = {};
+                buscaTodosClientes();
+                buscaLancamento();
+        }).error(function (erro) {
+            console.log(erro);
+        });
+
+    }
+
+    $scope.limpaPagamento = function () {
+       $scope.pagamento = {};
     }
 
     buscaTodosClientes();

@@ -20,12 +20,11 @@ module.exports = function (app) {
         Produto.findById(_id).exec()
             .then(
                 function (produto) {
-                    if (!produto) throw new Error("Contato não encontrado");
+                    if (!produto) throw new Error("Produto não encontrado.");
                     res.json(produto);
                 },
                 function (erro) {
-                    console.log(erro);
-                    res.status(404).json(erro);
+                    res.status(500).json(erro);
                 }
             );
     };
@@ -46,7 +45,6 @@ module.exports = function (app) {
                         res.json(produto);
                     },
                     function (erro) {
-                        console.error(erro);
                         res.status(500).json(erro);
                     }
                 );
@@ -57,7 +55,6 @@ module.exports = function (app) {
                         res.status(201).json(produto);
                     },
                     function (erro) {
-                        console.log(erro);
                         res.status(500).json(erro);
                     }
                 );
@@ -73,7 +70,7 @@ module.exports = function (app) {
                 res.status(204).end();
             },
             function (erro) {
-                return console.error(erro);
+                res.status(500).json(erro);
             }
             );
     }

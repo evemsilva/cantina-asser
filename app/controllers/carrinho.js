@@ -1,12 +1,7 @@
 module.exports = function (app) {
 
     var controller = {};
-    /*
-    let meuCarrinho = {};
-    meuCarrinho.itens = [];
-    */
     var Lancamento = app.models.lancamento;
-
 
     function somaTotaisCarrinho(carrinho) {
         carrinho.qtdeTotal = 0;
@@ -151,10 +146,9 @@ module.exports = function (app) {
             Lancamento.create(novoLancamento)
                 .then(
                 function (resultado) {
-                    console.log(resultado);
+                    
                 },
                 function (erro) {
-                    console.log(erro);
                     res.status(500).json(erro);
                 }
                 );

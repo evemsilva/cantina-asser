@@ -22,15 +22,19 @@ module.exports = function (app) {
         var query = Lancamento.find();
 
         if (dados.dataInicial && dados.dataFinal) {
-            query.where('data').gte(new Date(2017, 3, 1)).lte(new Date(2017, 3, 2));
+            var inicio = dados.dataInicial.split('/');
+            var fim = dados.dataFinal.split('/');
+            query.where('data').gte(new Date(inicio[2], (inicio[1] - 1), inicio[0])).lte(new Date(fim[2], (fim[1] - 1), fim[0], 23, 59, 59));
         }
 
         if (!dados.dataInicial && dados.dataFinal) {
-            query.where('data').lte(new Date(2017, 3, 2));
+            var fim = dados.dataFinal.split('/');
+            query.where('data').lte(new Date(fim[2], (fim[1] - 1), fim[0], 23, 59, 59));
         }
 
         if (dados.dataInicial && !dados.dataFinal) {
-            query.where('data').gte(new Date(2017, 3, 1));
+            var inicio = dados.dataInicial.split('/');
+            query.where('data').gte(new Date(inicio[2], (inicio[1] - 1), inicio[0]));
         }
 
         if (dados.cliente) {
@@ -52,6 +56,24 @@ module.exports = function (app) {
                 }
             );
     };
+
+    controller.efetuaPagamento = function (req, res) {
+        var pagamento = req.body;
+        pagamento.tipo = 1;
+        pagamento.quantidade = 1;
+
+        Lancamento.create(pagamento)
+            .then(
+                function (resultado) {
+                    res.status(201).json(resultado);
+                },
+                function (erro) {
+                    console.log(erro);
+                    res.status(500).json(erro);
+                }
+            );
+
+    }
 
     return controller;
 }

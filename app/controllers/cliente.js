@@ -9,7 +9,6 @@ module.exports = function (app) {
                     res.json(resultado);
                 },
                 function (erro) {
-                    console.error(erro);
                     res.status(500).json(erro);
                 }
             );
@@ -24,7 +23,6 @@ module.exports = function (app) {
                     res.json(resultado);
                 },
                 function (erro) {
-                    console.log(erro);
                     res.status(404).json(erro);
                 }
             );
@@ -48,7 +46,6 @@ module.exports = function (app) {
                         res.json(resultado);
                     },
                     function (erro) {
-                        console.error(erro);
                         res.status(500).json(erro);
                     }
                 );
@@ -59,7 +56,6 @@ module.exports = function (app) {
                         res.status(201).json(resultado);
                     },
                     function (erro) {
-                        console.log(erro);
                         res.status(500).json(erro);
                     }
                 );
@@ -68,15 +64,17 @@ module.exports = function (app) {
 
     controller.removeCliente = function (req, res) {
         var _id = req.params.id;
-        
-        Cliente.remove({ "_id": _id }).exec()
+
+        Cliente.remove({
+                "_id": _id
+            }).exec()
             .then(
-            function () {
-                res.status(204).end();
-            },
-            function (erro) {
-                return console.error(erro);
-            }
+                function () {
+                    res.status(204).end();
+                },
+                function (erro) {
+                    res.status(500).json(erro);
+                }
             );
     }
 

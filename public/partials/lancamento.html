@@ -24,21 +24,23 @@
                 <div class="form-group col-md-6">
                     <label>Data Inicial:</label>
                     <div class="input-group date">
-                        <input id="dataInicial" ng-model="filtro.dataInicial" datetimepicker datetimepicker-options="{format: 'DD/MM/YYYY', showClear: true, showClose: true}" class="form-control" />
+                        <input id="dataInicial" ng-model="filtro.dataInicial" datetimepicker datetimepicker-options="{format: 'DD/MM/YYYY', showClear: true, showClose: true}"
+                            class="form-control" />
                         <label for="dataInicial" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
                     <label>Data Final:</label>
                     <div class="input-group date">
-                        <input id="dataFinal" ng-model="filtro.dataFinal" datetimepicker datetimepicker-options="{format: 'DD/MM/YYYY', showClear: true, showClose: true}" class="form-control" />
+                        <input id="dataFinal" ng-model="filtro.dataFinal" datetimepicker datetimepicker-options="{format: 'DD/MM/YYYY', showClear: true, showClose: true}"
+                            class="form-control" />
                         <label for="dataFinal" class="input-group-addon btn"><span class="glyphicon glyphicon-calendar"></span></label>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">
 				    <span class="glyphicon glyphicon-search"></span> Pesquisar
 				</button>
-                <a href='/' class="btn btn-default">
+                <a class="btn btn-default" data-toggle="modal" data-target="#myModal">
                     <span class="glyphicon glyphicon-usd"></span> Efetuar Pagamento
                 </a>
             </form>
@@ -69,9 +71,9 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="2">Total Pago: {{totalPago | currency}}</td>
-                            <td colspan="2">Total Devido: {{totalDevido | currency}}</td>
-                            <td colspan="2">Saldo: {{saldo | currency}}</td>
+                            <td colspan="2"><b>Pago: {{totalPago | currency}}</b></td>
+                            <td colspan="2"><b>Total Devido: {{totalDevido | currency}}</b></td>
+                            <td colspan="2" ng-style="{color: saldo < 0 ? 'red' : 'green'}"><b>Saldo: {{saldo | currency}}</b></td>
                         </tr>
                         <tr>
                             <td colspan="6" class="text-center">
@@ -83,17 +85,36 @@
             </div>
         </div>
     </div>
+</div>
 
-    <!--
-    <script type="text/javascript">
-        $('#dataFinal').datepicker({
-            format: 'dd/mm/yyyy',
-            startDate: '01/01/2016',
-            endDate: '31/12/2040',
-            language: 'pt-BR',
-            keyboardNavigation: false,
-            autoclose: true
-        });
-    </script>
-    -->
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="limpaPagamento()" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Efetuar Pagamento</h4>
+            </div>
+            <form role="form" ng-submit="efetuarPagamento(pagamento)">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label>Cliente</label>
+                            <select class="form-control" ng-model="pagamento.cliente" required="required" ng-options="cliente._id as cliente.nome for cliente in clientes">
+                            </select>
+                        </div>
+
+                        <div class="form-group col-lg-12">
+                            <label>Valor</label>
+                            <input type="number" step="0.01" required="required" class="form-control" ng-model="pagamento.valor">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="limpaPagamento()" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
