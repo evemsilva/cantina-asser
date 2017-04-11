@@ -86,6 +86,9 @@ angular.module('cantina-asser').controller('ProdutosController', function ($scop
         $scope.carrinho.produto = produto;
         $scope.carrinho.$save()
             .then(function () {
+                $scope.mensagem = {
+                    texto: produto.nome + ' adicionado ao carrinho.'
+                };
                 $scope.carrinho = new Carrinho();
             })
             .catch(function (erro) {
