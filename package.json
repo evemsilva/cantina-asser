@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Sem teste especificado\"",
-    "start": "node server"
+    "start": "node server",
+    "postinstall": "bower install"
   },
   "author": "Everton Monte da Silva",
   "license": "ISC",
