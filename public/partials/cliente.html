@@ -6,18 +6,18 @@
                 <strong>Clientes</strong>
             </h2>
             <hr>
-            <div class="table-responsive">    
-                <table id="tabelaClientes" st-table="resultado" st-safe-src="clientes" class="table table-condensed display" style="text-align: center"> 
+            <div class="table-responsive">
+                <table id="tabelaClientes" st-table="resultado" st-safe-src="clientes" class="table table-condensed display" style="text-align: center">
                     <thead>
-                        <tr>   
+                        <tr>
                             <td colspan="4">
-                                 <div class="input-group">
+                                <div class="input-group">
                                     <span class="input-group-btn">
                                         <button title="Incluir novo cliente" class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal">
-                                            <span class="glyphicon glyphicon-plus"></span> Novo
-                                        </button>
+                                            <span class="glyphicon glyphicon-plus"></span>                                    Novo
+                                    </button>
                                     </span>
-                                    <input st-search="nome" class="form-control" placeholder="Pesquisar cliente ..." type="search"/>
+                                    <input st-search="nome" class="form-control" placeholder="Pesquisar cliente ..." type="search" />
                                 </div>
                             </td>
                         </tr>
@@ -33,9 +33,9 @@
                     <tbody>
                         <tr ng-repeat="cliente in resultado">
                             <td>{{cliente.nome}}</td>
-                            <td>{{cliente.cpf}}</td>
-                            <td>{{cliente.telefone1}}</td>
-                            <td>{{cliente.telefone2}}</td>
+                            <td>{{cliente.cpf | brCpf}}</td>
+                            <td>{{cliente.telefone1 | brPhoneNumber}}</td>
+                            <td>{{cliente.telefone2 | brPhoneNumber}}</td>
                             <td>{{cliente.curso.nome}}</td>
                             <td>
                                 <div class="btn-group">
@@ -75,30 +75,41 @@
                 <button type="button" class="close" ng-click="limparCliente()" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title text-center">Adicionar/Editar Cliente</h4>
             </div>
-            <form role="form" ng-submit="salva()">
+            <form novalidate name="formulario" role="form" ng-submit="salva()">
                 <div class="modal-body">
                     <div class="row">
                         <div class="form-group col-lg-12">
                             <label>Nome</label>
-                            <input type="text" class="form-control" ng-model="cliente.nome" required="required">
+                            <input type="text" name="nome" class="form-control" ng-model="cliente.nome" required>
+                            <span ng-show="formulario.$submitted && formulario.nome.$error.required" class="form-control alert-danger">
+				                Nome obrigatório
+			                </span>
                         </div>
                         <div class="form-group col-lg-12">
                             <label>CPF</label>
-                            <input type="text" class="form-control" ng-model="cliente.cpf" required="required">
+                            <input type="text" name="cpf" class="form-control" ng-model="cliente.cpf" required ui-br-cpf-mask>
+                            <span ng-show="formulario.$submitted && formulario.cpf.$error.required" class="form-control alert-danger">
+				                CPF obrigatório
+			                </span>
+                            <span ng-show="formulario.$submitted && formulario.cpf.$invalid" class="form-control alert-danger">
+				                CPF inválido
+			                </span>
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Telefone 01</label>
-                            <input type="text" class="form-control" ng-model="cliente.telefone1">
+                            <input type="text" class="form-control" ng-model="cliente.telefone1" ui-br-phone-number>
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Telefone 02</label>
-                            <input type="text" class="form-control" ng-model="cliente.telefone2">
+                            <input type="text" class="form-control" ng-model="cliente.telefone2" ui-br-phone-number>
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Curso</label>
-                            <select class="form-control" ng-model="cliente.curso" required="required"
-                                ng-options="curso._id as curso.nome for curso in cursos">
+                            <select name="curso" class="form-control" ng-model="cliente.curso" required ng-options="curso._id as curso.nome for curso in cursos">
                             </select>
+                            <span ng-show="formulario.$submitted && formulario.curso.$error.required" class="form-control alert-danger">
+				                Curso obrigatório
+			                </span>
                         </div>
                     </div>
                 </div>
@@ -113,19 +124,22 @@
 
 <!-- Modal Pergunta de Segurança -->
 <div id="myModalYesNo" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" ng-click="limparCliente()"aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Pergunta</h4>
-      </div>
-      <div class="modal-body">
-        <p>Deseja excluir o cliente <b>{{cliente.nome}}</b>?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="limparCliente()">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="removeCliente(cliente)">Excluir cliente</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="limparCliente()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Pergunta</h4>
+            </div>
+            <div class="modal-body">
+                <p>Deseja excluir o cliente <b>{{cliente.nome}}</b>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="limparCliente()">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="removeCliente(cliente)">Excluir cliente</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
