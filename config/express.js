@@ -27,8 +27,8 @@ module.exports = function () {
     app.use(helmet.noSniff());
     app.disable('x-powered-by');
 
-    // Configuracao do ambiente
-    app.set('port', 3000);
+    // Configuracao da porta
+    app.set('port', (process.env.PORT || 3000));
 
     // middleware
     app.use(express.static('./public'));
