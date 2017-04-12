@@ -51,12 +51,12 @@
                 <table id="tabelaLancamentos" st-table="resultado" st-safe-src="lancamentos" class="table table-condensed display" style="text-align: center">
                     <thead>
                         <tr class="info">
-                            <td><b>Cliente</b></td>
-                            <td><b>Data</b></td>
-                            <td><b>Produto</b></td>
-                            <td><b>Quantidade</b></td>
-                            <td><b>Valor</b></td>
-                            <td><b>Tipo</b></td>
+                            <td st-sort="cliente.nome"><b>Cliente</b></td>
+                            <td st-sort="data"><b>Data</b></td>
+                            <td st-sort="produto"><b>Produto</b></td>
+                            <td st-sort="quantidade"><b>Quantidade</b></td>
+                            <td st-sort="valor"><b>Valor</b></td>
+                            <td st-sort="tipo"><b>Tipo</b></td>
                         </tr>
                     </thead>
                     <tbody>

@@ -44,12 +44,13 @@
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </div>
+                                <!-- Excluir Cliente 
                                 <div class="btn-group">
-                                    <!-- Excluir Cliente -->
                                     <button title="Excluir Cliente" class="btn btn-danger" ng-click="selecionarCliente(cliente._id)" data-toggle="modal" data-target="#myModalYesNo">
                                         <span class="glyphicon glyphicon-remove"></span>
                                     </button>
                                 </div>
+                                -->
                             </td>
                         </tr>
                     </tbody>
@@ -79,11 +80,11 @@
                     <div class="row">
                         <div class="form-group col-lg-12">
                             <label>Nome</label>
-                            <input type="text" class="form-control" ng-model="cliente.nome">
+                            <input type="text" class="form-control" ng-model="cliente.nome" required="required">
                         </div>
                         <div class="form-group col-lg-12">
                             <label>CPF</label>
-                            <input type="text" class="form-control" ng-model="cliente.cpf">
+                            <input type="text" class="form-control" ng-model="cliente.cpf" required="required">
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Telefone 01</label>
@@ -95,7 +96,7 @@
                         </div>
                         <div class="form-group col-lg-12">
                             <label>Curso</label>
-                            <select class="form-control" ng-model="cliente.curso" 
+                            <select class="form-control" ng-model="cliente.curso" required="required"
                                 ng-options="curso._id as curso.nome for curso in cursos">
                             </select>
                         </div>
@@ -123,7 +124,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="limparCliente()">Close</button>
-        <button type="button" class="btn btn-primary" ng-click="removeCliente(cliente)">Salvar Mudanças</button>
+        <button type="button" class="btn btn-primary" ng-click="removeCliente(cliente)">Excluir cliente</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

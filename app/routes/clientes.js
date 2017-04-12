@@ -7,6 +7,6 @@ module.exports = function (app) {
     .post(autenticador.verificaAutenticacao, controller.salvaCliente);
 
     app.route('/clientes/:id')
-    .get(autenticador.verificaAutenticacao, controller.obtemCliente)
-    .delete(autenticador.verificaAutenticacao, controller.removeCliente);
+    .get(autenticador.verificaAutenticacao, controller.obtemCliente);
+    //.delete(autenticador.verificaAutenticacao, controller.removeCliente)
 };

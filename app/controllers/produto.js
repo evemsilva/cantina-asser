@@ -1,3 +1,5 @@
+var sanitize = require('mongo-sanitize');
+
 module.exports = function (app) {
     var controller = {};
     var Produto = app.models.produto;
@@ -62,7 +64,7 @@ module.exports = function (app) {
     }
 
     controller.removeProduto = function (req, res) {
-        var _id = req.params.id;
+        var _id = sanitize(req.params.id);
         
         Produto.remove({ "_id": _id }).exec()
             .then(
