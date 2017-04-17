@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Sem teste especificado\"",
     "start": "node server",
-    "postinstall": "bower install && grunt"
+    "postinstall": "bower install && grunt default"
   },
   "author": "Everton Monte da Silva",
   "license": "ISC",
